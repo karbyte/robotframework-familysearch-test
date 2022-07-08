@@ -14,8 +14,8 @@ ${SurnameButton}  //*[@id="trigger_srnm"]
 ${SurnameTextField}  //*[@id="surname"]
 ${TitleButton}  //*[@id="trigger_ttl"]
 ${TitleTextField}  //*[@id="title"]
-${RadioButtonGroup}  availability-fhl
-${RadioButtonId}  fhl-or-online
+${RadioButtonGroup}  fhl-or-online
+${RadioButtonId}  availability-fhl
 ${LocationList}  //*[@id="availability"]
 ${SearchMemberButton}  //*[@id="catalog-search"]/fieldset/fieldset/div/button[1]
 
@@ -48,7 +48,4 @@ Search for a member
     Click Element    ${TitleButton}
     Wait Until Page Contains Element    ${TitleTextField}
     Input Text    ${TitleTextField}    Pan
-    Select Radio Button    ${RadioButtonId}    ${RadioButtonGroup}
-    Select From List By Value    ${LocationList}  New York City New York Family History Center
-    Click Button    ${SearchMemberButton}
-    Wait Until Page Contains    Wyniki
+    Click Element    ${SearchMemberButton}
