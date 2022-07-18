@@ -7,7 +7,7 @@ ${URL}  https://www.familysearch.org
 ${Browser}  Chrome
 
 *** Test Cases ***
-case_001 Login and search for a member
+case_001 Login
     Open Browser  ${URL}  ${Browser}
     Maximize Window and Accept Cookie
     Authentication

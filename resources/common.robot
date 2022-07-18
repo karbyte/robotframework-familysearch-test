@@ -2,11 +2,16 @@
 Library  SeleniumLibrary
 
 *** Variables ***
+#Accept cookie variable
 ${CookieAcceptButton}  //*[@id="truste-consent-button"]
+
+#Authentication variables
 ${SignInButton}  //*[@id="signInLink"]
 ${UsernameTextField}  //*[@id="userName"]
 ${PasswordTextField}  //*[@id="password"]
 ${SignInButtonWithCreds}  //*[@id="login"]
+
+#Member searching variables
 ${SearchButton}  //*[@id="primaryNav"]/div[2]/button
 ${Catalog}  //*[@id="search"]/li[5]/a
 ${PlaceTextField}  //*[@id="placeName"]
@@ -18,6 +23,10 @@ ${RadioButtonGroup}  fhl-or-online
 ${RadioButtonId}  availability-fhl
 ${LocationList}  //*[@id="availability"]
 ${SearchMemberButton}  //*[@id="catalog-search"]/fieldset/fieldset/div/button[1]
+
+#Search for a photo
+${SearchPhotoButton}  //*[@id="search"]/li[2]/a
+${PhotoTextField}  //*[@id="main"]/div[2]/section/div[2]/ly-search-sidebar/div/section[1]/div[1]/div/label/span/ly-place-selector/div/div[1]/input
 
 *** Keywords ***
 Maximize Window and Accept Cookie
@@ -49,3 +58,9 @@ Search for a member
     Wait Until Page Contains Element    ${TitleTextField}
     Input Text    ${TitleTextField}    Pan
     Click Element    ${SearchMemberButton}
+
+Search for a photo
+    Click Element    ${SearchButton}
+    Click Element    ${SearchPhotoButton}
+    Input Text    ${PhotoTextField}    Lublin
+    Press Keys    ${PhotoTextField}    RETURN

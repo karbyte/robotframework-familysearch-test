@@ -7,9 +7,9 @@ ${URL}  https://www.familysearch.org
 ${Browser}  Chrome
 
 *** Test Cases ***
-case_002 Login and search for a member
+case_003 Search for a photo
     Open Browser  ${URL}  ${Browser}
     Maximize Window and Accept Cookie
     Authentication
-    Search for a member
-    Close Browser
+    Search for a photo
+    Sleep and Close Browser
