@@ -42,10 +42,7 @@ ${IGINameTextField}  //*[@id="givenName"]
 ${IGISearchButton}  //*[@id="search-form"]/div/div[2]/div/div[1]/button
 
 #005
-${BlogTab}  //*[@id="global-footer"]/section[1]/nav/ul[1]/li[3]/a
-${MagnifierButton}  /html/body/div[3]/div/ps-subnav/div[2]/ps-toggler/span
-${BlogTextField}  //*[@id="PageSearchAction"]
-${BlogConfirmSearchButton}  /html/body/div[3]/div/ps-subnav/div[2]/ps-toggler/form/button
+${VolunteerButton}  //*[@id="global-footer"]/section[1]/nav/ul[1]/li[2]/a
 
 *** Keywords ***
 Open Browser, Maximize Window and Accept Cookie
@@ -121,3 +118,14 @@ Writing surname into text field
     Sleep    1s
     Click Element    ${IGISearchButton}
     Wait Until Page Contains    text
+
+Clicking Volunteer tab 
+    Click Element    ${VolunteerButton}
+    Wait Until Page Contains    Volunteer Activities at FamilySearch
+    
+Getting into Learn More about history tab
+    Click Link    link:Serve a Family History Mission
+    Wait Until Page Contains    Full-Time Mission Opportunities
+
+Getting on the form page
+    Click Link    link: Contact Us
