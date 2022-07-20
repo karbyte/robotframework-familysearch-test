@@ -2,14 +2,12 @@
 Library  SeleniumLibrary
 Resource  ../resources/common.robot
 
-*** Variables ***
-${URL}  https://www.familysearch.org
-${Browser}  Chrome
+Test Setup  Open Browser, Maximize Window and Accept Cookie
+Test Teardown  Sleep and Close Browser
 
 *** Test Cases ***
-case_002 Login and search for a member
-    Open Browser  ${URL}  ${Browser}
-    Maximize Window and Accept Cookie
-    Authentication
-    Search for a member
-    Close Browser
+testcase_002_Log_in_and_search_for_a_member
+    Logging into user account   karbyte  awds1234
+    Search for a member  BirthPlace=${Birth}
+    Activating and writing surname  UserSurname=${Surname}
+    Activating and writing title

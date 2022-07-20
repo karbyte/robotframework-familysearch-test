@@ -2,34 +2,54 @@
 Library  SeleniumLibrary
 
 *** Variables ***
-#Accept cookie variable
+
+#Test setup variables
+${URL}  https://www.familysearch.org
+${Browser}  Chrome
 ${CookieAcceptButton}  //*[@id="truste-consent-button"]
 
-#Authentication variables
+#001
 ${SignInButton}  //*[@id="signInLink"]
 ${UsernameTextField}  //*[@id="userName"]
 ${PasswordTextField}  //*[@id="password"]
 ${SignInButtonWithCreds}  //*[@id="login"]
 
-#Member searching variables
+#002
 ${SearchButton}  //*[@id="primaryNav"]/div[2]/button
 ${Catalog}  //*[@id="search"]/li[5]/a
 ${PlaceTextField}  //*[@id="placeName"]
+${Birth}  Warszawa
 ${SurnameButton}  //*[@id="trigger_srnm"]
 ${SurnameTextField}  //*[@id="surname"]
+${Surname}  Nowak
 ${TitleButton}  //*[@id="trigger_ttl"]
 ${TitleTextField}  //*[@id="title"]
+${Title}  Pan
 ${RadioButtonGroup}  fhl-or-online
 ${RadioButtonId}  availability-fhl
 ${LocationList}  //*[@id="availability"]
 ${SearchMemberButton}  //*[@id="catalog-search"]/fieldset/fieldset/div/button[1]
 
-#Search for a photo
+#003
 ${SearchPhotoButton}  //*[@id="search"]/li[2]/a
 ${PhotoTextField}  //*[@id="main"]/div[2]/section/div[2]/ly-search-sidebar/div/section[1]/div[1]/div/label/span/ly-place-selector/div/div[1]/input
+${PhotoLocationVariable}  Lublin
+
+#004
+${SiteMapTab}  //*[@id="global-footer"]/section[1]/nav/ul[1]/li[4]/a
+${IGIbuttonSiteMap}  //*[@id="main-content-section"]/div/section[2]/ul/li[3]/a
+${IGINameTextField}  //*[@id="givenName"]
+${IGISearchButton}  //*[@id="search-form"]/div/div[2]/div/div[1]/button
+
+#005
+${BlogTab}  //*[@id="global-footer"]/section[1]/nav/ul[1]/li[3]/a
+${MagnifierButton}  /html/body/div[3]/div/ps-subnav/div[2]/ps-toggler/span
+${BlogTextField}  //*[@id="PageSearchAction"]
+${BlogConfirmSearchButton}  /html/body/div[3]/div/ps-subnav/div[2]/ps-toggler/form/button
 
 *** Keywords ***
-Maximize Window and Accept Cookie
+Open Browser, Maximize Window and Accept Cookie
+    Open Browser  ${URL}  ${Browser}
     Maximize Browser Window
     Wait Until Page Contains Element    ${CookieAcceptButton}
     Click Button    ${CookieAcceptButton}
@@ -38,29 +58,66 @@ Sleep and Close Browser
     Sleep    2s
     Close Browser
 
-Authentication
+Logging into user account
+    [Arguments]  ${Username}  ${Password}
     Click Element    ${SignInButton}
     Wait Until Page Contains    Sign In
-    Input Text    ${UsernameTextField}    karbyte
-    Input Password    ${PasswordTextField}    awds1234
+    Input Text    ${UsernameTextField}    ${Username}
+    Input Password    ${PasswordTextField}    ${Password}
     Click Button    ${SignInButtonWithCreds}
     Wait Until Page Contains    Intellectual Reserve
 
-Search for a member
+Clicking catalog and wait for content
     Click Element    ${SearchButton}
     Click Element    ${Catalog}
     Wait Until Page Contains    Katalog FamilySearch
-    Input Text    ${PlaceTextField}    Warszawa
+
+Search for a member
+    [Arguments]  ${BirthPlace}
+    Clicking catalog and wait for content
+    Input Text    ${PlaceTextField}    ${BirthPlace}
+
+Activating and writing surname
+    [Arguments]  ${UserSurname}
     Click Element    ${SurnameButton}
     Wait Until Page Contains Element    ${SurnameTextField}
-    Input Text    ${SurnameTextField}    Nowak
+    Input Text    ${SurnameTextField}    ${Surname}
+
+Activating and writing title
     Click Element    ${TitleButton}
     Wait Until Page Contains Element    ${TitleTextField}
-    Input Text    ${TitleTextField}    Pan
+    Input Text    ${TitleTextField}    ${Title}
+    Textfield Should Contain    ${TitleTextField}    ${Title}
     Click Element    ${SearchMemberButton}
+    Sleep    2s
+    Wait Until Page Contains    Wyniki wyszukiwania  timeout=4
 
 Search for a photo
+    [Arguments]  ${PhotoLocation}
     Click Element    ${SearchButton}
     Click Element    ${SearchPhotoButton}
-    Input Text    ${PhotoTextField}    Lublin
+    Input Text    ${PhotoTextField}    ${PhotoLocationVariable}
     Press Keys    ${PhotoTextField}    RETURN
+
+Get into Site Map tab
+    Click Element    ${SiteMapTab}
+    Wait Until Page Contains    Mapa strony FamilySearch
+
+Get into IGI tab and search for a person
+    Click Element    ${IGIbuttonSiteMap}
+    Wait Until Page Contains    International Genealogical Index (IGI)
+    Sleep    2s
+
+Writing name into text field
+    [Arguments]  ${IGIName}
+    Input Text    ${IGINameTextField}    ${IGIName}
+    Textfield Should Contain    ${IGINameTextField}    ${IGIName}
+    Sleep    2s
+
+Writing surname into text field
+    [Arguments]  ${IGISurname}
+    Input Text    ${SurnameTextField}    ${IGISurname}
+    Textfield Should Contain    ${SurnameTextField}    ${IGISurname}
+    Sleep    1s
+    Click Element    ${IGISearchButton}
+    Wait Until Page Contains    text
