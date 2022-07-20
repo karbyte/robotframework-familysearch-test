@@ -2,13 +2,9 @@
 Library  SeleniumLibrary
 Resource  ../resources/common.robot
 
-*** Variables ***
-${URL}  https://www.familysearch.org
-${Browser}  Chrome
+Test Setup  Open Browser, Maximize Window and Accept Cookie
+Test Teardown  Sleep and Close Browser
 
 *** Test Cases ***
-case_001 Login
-    Open Browser  ${URL}  ${Browser}
-    Maximize Window and Accept Cookie
-    Authentication
-    Sleep and Close Browser
+testcase_001_Logging_into_user_account
+    Logging into user account  Username=karbyte  Password=awds1234
